@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Aniversário da Antonia • 6 anos • 15 de novembro de 2026 às 18h30">
+  <meta name="theme-color" content="#d72b9b">
+  <title>Aniversário da Antonia • 6 anos</title>
+  <style>
+* { box-sizing: border-box; }
+:root {
+  --pink: #d72b9b;
+  --deep-pink: #a51c79;
+  --purple: #6732a0;
+  --ink: #28142c;
+  --cream: #fff6d8;
+}
+html, body { margin: 0; min-height: 100%; font-family: "Trebuchet MS", Arial, sans-serif; color: var(--ink); }
+body { background: #f6d8ef; }
+button, input { font: inherit; }
+.page { min-height: 100svh; width: 100%; position: relative; }
+.page[hidden] { display: none !important; }
+
+/* Página 1: imagem preservada na proporção original */
+.page-cover {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: #e8c6e7;
+}
+.cover-image {
+  display: block;
+  width: 100%;
+  max-width: 705px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Página 2 */
+.page-info {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #cda8ed url("assets/page2-background.jpg") center top / cover no-repeat;
+  padding: clamp(22px, 5vw, 48px) 16px 150px;
+}
+.page2-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(160deg, rgba(255,235,249,.78), rgba(211,170,239,.78) 52%, rgba(255,207,232,.82));
+}
+.info-content { width: min(100%, 560px); margin: 0 auto; }
+.intro { text-align: center; margin: 4px 0 22px; color: #4b1e69; text-shadow: 0 1px 0 rgba(255,255,255,.65); }
+.eyebrow { margin: 0 0 7px; font-size: .76rem; font-weight: 900; letter-spacing: .12em; }
+h1 { margin: 0; font-size: clamp(2rem, 8vw, 3rem); line-height: 1.05; color: #9b247d; }
+.subtitle { margin: 8px 0 0; font-weight: 700; font-size: 1rem; }
+.info-card {
+  background: rgba(255,255,255,.91);
+  border: 2px solid rgba(255,255,255,.8);
+  border-radius: 22px;
+  padding: 20px;
+  margin: 15px 0;
+  box-shadow: 0 10px 28px rgba(78,30,104,.14);
+  backdrop-filter: blur(7px);
+}
+.section-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.section-heading h2 { margin: 0; color: #72277f; font-size: 1.22rem; }
+.heading-icon { font-size: 1.45rem; }
+.sizes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.size-item {
+  background: #fff0bd;
+  border: 1px solid #f2d58b;
+  border-radius: 16px;
+  padding: 14px 10px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 8px;
+}
+.size-emoji { font-size: 1.45rem; grid-row: span 2; }
+.size-label { font-size: .88rem; color: #6b526b; }
+.size-item strong { font-size: 1.35rem; color: #9a287f; }
+.venue { margin: -5px 0 14px 34px; color: #725c78; font-weight: 700; }
+.map-actions { display: grid; gap: 10px; }
+.map-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #2c2140;
+  padding: 13px 14px;
+  border-radius: 15px;
+  border: 1px solid #e9dff0;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.map-link:active { transform: scale(.985); }
+.map-link:focus-visible, .floating-confirm:focus-visible, .submit-button:focus-visible, .modal-close:focus-visible {
+  outline: 3px solid #c52a91;
+  outline-offset: 3px;
+}
+.map-link.waze { background: #e7f8f1; }
+.map-link.maps { background: #edf3ff; }
+.map-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: rgba(255,255,255,.8);
+  font-size: 1.25rem;
+  color: #2878ce;
+  flex: 0 0 auto;
+}
+.map-link > span:nth-child(2) { display: grid; gap: 2px; flex: 1; }
+.map-link strong { font-size: .98rem; }
+.map-link small { color: #6f6876; font-size: .78rem; }
+.external { font-size: 1.2rem; color: #78638b; }
+.closing { text-align: center; font-weight: 800; color: #702875; margin: 20px 8px 0; font-size: 1rem; }
+.floating-confirm {
+  position: fixed;
+  z-index: 5;
+  right: max(14px, env(safe-area-inset-right));
+  bottom: max(14px, env(safe-area-inset-bottom));
+  width: clamp(150px, 43vw, 220px);
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  filter: drop-shadow(0 8px 8px rgba(0,0,0,.25));
+  transition: transform .16s ease;
+}
+.floating-confirm:active { transform: scale(.94); }
+.floating-confirm img { display: block; width: 100%; height: auto; }
+
+/* Modal */
+.modal { display: none; position: fixed; inset: 0; z-index: 20; align-items: center; justify-content: center; padding: 18px; }
+.modal.is-open { display: flex; }
+.modal-backdrop { position: absolute; inset: 0; background: rgba(35,13,43,.65); }
+.modal-panel {
+  position: relative;
+  width: min(100%, 420px);
+  background: linear-gradient(145deg, #fff, #fff0fa);
+  border: 2px solid #fff;
+  border-radius: 25px;
+  padding: 28px 22px 22px;
+  text-align: center;
+  box-shadow: 0 20px 70px rgba(0,0,0,.3);
+}
+.modal-close {
+  position: absolute;
+  right: 13px;
+  top: 8px;
+  border: 0;
+  background: transparent;
+  color: #75416f;
+  font-size: 1.9rem;
+  cursor: pointer;
+}
+.modal-heart { font-size: 2rem; }
+.modal-panel h2 { margin: 7px 0; color: #9b247d; }
+.modal-panel p { color: #6c5a6d; line-height: 1.45; }
+#confirmationForm { text-align: left; margin-top: 18px; }
+#confirmationForm label { display: block; font-weight: 800; margin: 0 0 7px; color: #56345d; }
+#guestName {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #e8c5e1;
+  border-radius: 13px;
+  outline: none;
+  background: #fff;
+}
+#guestName:focus { border-color: #c52a91; box-shadow: 0 0 0 3px rgba(197,42,145,.12); }
+.submit-button {
+  width: 100%;
+  border: 0;
+  border-radius: 999px;
+  padding: 14px;
+  margin-top: 13px;
+  color: #fff;
+  font-weight: 900;
+  background: linear-gradient(90deg, #c51d83, #7130a0);
+  cursor: pointer;
+}
+.submit-button:disabled { opacity: .65; cursor: wait; }
+.form-message { min-height: 1.3em; margin: 12px 0 0 !important; font-weight: 800; }
+.form-message.success { color: #16834b; }
+.form-message.error { color: #b42318; }
+.privacy-note { font-size: .75rem; margin-bottom: 0 !important; }
+
+@media (min-width: 760px) {
+  .page-info { padding-top: 54px; }
+  .info-content { width: min(100%, 620px); }
+  .floating-confirm { width: 205px; right: 34px; bottom: 24px; }
+}
+@media (min-width: 900px) {
+  body { background: #ead4ec; }
+  .page-cover {
+    padding: 24px 0;
+    background: linear-gradient(135deg, #e9c6e8, #f8e7f3);
+  }
+  .cover-image {
+    width: min(100%, 705px);
+    border-radius: 8px;
+    box-shadow: 0 12px 40px rgba(75, 32, 83, .18);
+  }
+  .page-info { min-height: 100vh; padding: 54px 24px 150px; }
+  .page2-shade {
+    background: linear-gradient(135deg, rgba(255,241,250,.88), rgba(218,190,241,.88));
+  }
+  .info-content { width: min(100%, 700px); }
+  .info-card { padding: 24px 28px; }
+  .sizes { gap: 18px; }
+  .map-actions { grid-template-columns: 1fr 1fr; }
+  .floating-confirm { width: 190px; right: 28px; bottom: 24px; }
+}
+@media (max-width: 480px) {
+  .cover-image { width: 100%; }
+  .page-info { padding: 28px 13px 130px; }
+  .info-content { width: 100%; }
+  .intro { margin-top: 10px; }
+  .floating-confirm { width: 145px; right: 10px; bottom: 10px; }
+}
+@media (max-width: 380px) {
+  .info-card { padding: 16px; }
+  .size-item { padding: 11px 8px; }
+  .size-item strong { font-size: 1.2rem; }
+  .map-link { padding: 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+  </style>
+</head>
+<body>
+  <main>
+    <section id="page1" class="page page-cover" aria-label="Convite de aniversário">
+      <img class="cover-image" src="assets/page1-background.jpg" alt="Convite da festa da Antonia">
+    </section>
+
+    <section id="page2" class="page page-info" aria-label="Informações da festa">
+      <div class="page2-shade"></div>
+      <div class="info-content">
+        <header class="intro">
+          <p class="eyebrow">15 DE NOVEMBRO DE 2026 • 18H30</p>
+          <h1>Vamos comemorar!</h1>
+          <p class="subtitle">Aniversário da Antonia • 6 anos</p>
+        </header>
+
+        <section class="info-card gift-card">
+          <div class="section-heading">
+            <span class="heading-icon" aria-hidden="true">🎁</span>
+            <h2>Dicas de presentes</h2>
+          </div>
+          <div class="sizes">
+            <div class="size-item">
+              <span class="size-emoji" aria-hidden="true">👗</span>
+              <span class="size-label">Roupa</span>
+              <strong>10 / 12</strong>
+            </div>
+            <div class="size-item">
+              <span class="size-emoji" aria-hidden="true">👟</span>
+              <span class="size-label">Calçado</span>
+              <strong>31 / 32</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="info-card location-card">
+          <div class="section-heading">
+            <span class="heading-icon" aria-hidden="true">📍</span>
+            <h2>Como chegar?</h2>
+          </div>
+          <p class="venue">Espaço Nathalia Lino</p>
+          <div class="map-actions">
+            <a class="map-link waze" href="https://www.waze.com/pt-BR/live-map/directions/br/mg/r.-jose-felix-martins,-623?navigate=yes&utm_campaign=live_map&utm_source=waze_website&utm_medium=lm_share_location&to=place.ChIJKf0LCEuOpgAR-PyLEnt09Ig" target="_blank" rel="noopener noreferrer">
+              <span class="map-icon" aria-hidden="true">➤</span>
+              <span><strong>Abrir no Waze</strong><small>Traçar rota até a festa</small></span>
+              <span class="external" aria-hidden="true">↗</span>
+            </a>
+            <a class="map-link maps" href="https://www.google.com/maps/place/Espa%C3%A7o+Nathalia+Lino/@-19.7996175,-43.985287,530m/data=!3m1!1e3!4m6!3m5!1s0xa68fa4d7f037e5:0xfde2ab685791eb64!8m2!3d-19.7995808!4d-43.9841261!16s%2Fg%2F11j90dbjc0?entry=ttu&g_ep=EgoyMDI2MTEwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">
+              <span class="map-icon" aria-hidden="true">📍</span>
+              <span><strong>Abrir no Google Maps</strong><small>Ver localização do espaço</small></span>
+              <span class="external" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </section>
+
+        <p class="closing">Esperamos você para comemorar esse dia especial! 💗</p>
+      </div>
+    </section>
+  </main>
+
+  <button id="confirmOpen" class="floating-confirm" type="button" aria-label="Confirmar presença">
+    <img src="assets/botao-confirmar.png" alt="Confirme sua presença aqui">
+  </button>
+
+  <div id="confirmModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" type="button" aria-label="Fechar" data-close-modal>×</button>
+      <div class="modal-heart" aria-hidden="true">💗</div>
+      <h2 id="modalTitle">Confirme sua presença</h2>
+      <p>Digite seu nome para confirmar que vai comemorar com a Antonia!</p>
+      <form id="confirmationForm">
+        <label for="guestName">Seu nome</label>
+        <input id="guestName" name="nome" type="text" maxlength="100" autocomplete="name" placeholder="Ex.: Maria Silva" required>
+        <button id="submitConfirmation" class="submit-button" type="submit">Confirmar presença</button>
+      </form>
+      <p id="formMessage" class="form-message" role="status" aria-live="polite"></p>
+      <p class="privacy-note">Seus dados serão usados apenas para organização da festa.</p>
+    </section>
+  </div>
+
+  <noscript>
+    <p style="text-align:center;padding:16px">Para confirmar sua presença, ative o JavaScript ou entre em contato com a família.</p>
+  </noscript>
+
+  <script>
+const API_URL = "https://script.google.com/macros/s/AKfycbxMCy2NFnYP8rf3aEbMgqdC6EEdZfLpZL36xawwi9WADUY0mtlVRQbqiCHA0TIlmFon/exec";
+
+const confirmOpen = document.getElementById("confirmOpen");
+const modal = document.getElementById("confirmModal");
+const form = document.getElementById("confirmationForm");
+const nameInput = document.getElementById("guestName");
+const submitButton = document.getElementById("submitConfirmation");
+const formMessage = document.getElementById("formMessage");
+const BUTTON_TEXT = "Confirmar presença";
+let enviando = false;
+
+function openModal() {
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+  formMessage.textContent = "";
+  formMessage.className = "form-message";
+  window.setTimeout(() => nameInput.focus(), 80);
+}
+
+function closeModal() {
+  modal.classList.remove("is-open");
+  modal.setAttribute("aria-hidden", "true");
+  confirmOpen.focus();
+}
+
+confirmOpen.addEventListener("click", openModal);
+
+document.querySelectorAll("[data-close-modal]").forEach((element) => {
+  element.addEventListener("click", closeModal);
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && modal.classList.contains("is-open")) closeModal();
+});
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (enviando) return;
+
+  const nome = nameInput.value.trim();
+  if (!nome) {
+    formMessage.textContent = "Digite seu nome para continuar.";
+    formMessage.className = "form-message error";
+    nameInput.focus();
+    return;
+  }
+
+  enviando = true;
+  submitButton.disabled = true;
+  submitButton.textContent = "Enviando...";
+  formMessage.textContent = "";
+
+  try {
+    await fetch(API_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=UTF-8" },
+      body: JSON.stringify({ nome })
+    });
+
+    formMessage.textContent = "Presença confirmada! Estamos esperando você. ❤️";
+    formMessage.className = "form-message success";
+    form.reset();
+    submitButton.textContent = "Confirmado!";
+
+    window.setTimeout(() => {
+      closeModal();
+      submitButton.disabled = false;
+      submitButton.textContent = BUTTON_TEXT;
+      enviando = false;
+    }, 2600);
+
+  } catch (error) {
+    console.error("Erro ao enviar confirmação:", error);
+    formMessage.textContent = "Não foi possível enviar agora. Tente novamente.";
+    formMessage.className = "form-message error";
+    submitButton.disabled = false;
+    submitButton.textContent = "Tentar novamente";
+    enviando = false;
+  }
+});
+  </script>
+</body>
+</html>
